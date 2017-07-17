@@ -5,18 +5,18 @@ pipeline:
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws ecr get-login --region us-east-1 | bash
-      - docker pull 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock 
-    secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY ]
-
-  deploy_database:
-    image: scottlackey/drone-auth-ecr
-    commands:
       - docker run 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882 postgres/db.js deploy --host=$POSTGRES_HOST -u="$POSTGRES_USER" -p="$POSTGRES_PASSWORD" -d="$POSTGRES_DATABASE"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    secrets: [ POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE ]
+      - /var/run/docker.sock:/var/run/docker.sock 
+    secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE ]
+
+  # deploy_database:
+  #   image: scottlackey/drone-auth-ecr
+  #   commands:
+  #     - docker run 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882 postgres/db.js deploy --host=$POSTGRES_HOST -u="$POSTGRES_USER" -p="$POSTGRES_PASSWORD" -d="$POSTGRES_DATABASE"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   secrets: [ POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE ]
   
   deploy_meteor:
     image: scottlackey/drone-auth-ecr
