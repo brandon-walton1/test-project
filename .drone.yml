@@ -3,3 +3,8 @@ pipeline:
     image: node
     commands:
       - node hello-world.js
+  
+  aws:
+    image: node
+    commands: 
+      - $(aws ecr get-login --region us-east-1 --no-include-email)
