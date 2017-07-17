@@ -5,7 +5,12 @@ pipeline:
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws ecr get-login --region us-east-1 | bash
-      - docker pull 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-api:meteor-api-MET-3275-has-rows.1.0.2-dev.13756
+      - docker pull 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY ]
+
+  build:
+      image: 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882
+      commands:
+        - docker run 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882 ./postgres/db.js --host=10.0.3.155 -u="postgres" -p="postgres" -d="postgres"
