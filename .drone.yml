@@ -1,6 +1,6 @@
 pipeline:
   auth:
-    image: drone-auth-ecr
+    image: scottlackery/drone-auth-ecr
     commands:
       - aws ecr get-login --region us-east-1 | bash
       - docker pull 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-api:meteor-api-MET-3275-has-rows.1.0.2-dev.13756
