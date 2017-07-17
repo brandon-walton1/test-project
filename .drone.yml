@@ -13,4 +13,4 @@ pipeline:
   build:
       image: 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882
       commands:
-        - ./postgres/db.js --host=10.0.3.155 -u="postgres" -p="postgres" -d="postgres"
+        - postgres/db.js deploy --host=10.0.3.155 -u="postgres" -p="postgres" -d="postgres"
