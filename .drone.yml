@@ -22,8 +22,8 @@ pipeline:
     image: peloton/drone-ecs
     region: us-east-1
     cluster: api-feature-cluster
-    access_key: $AWS_ACCESS_KEY_ID
-    secret_key: $AWS_SECRET_ACCESS_KEY
+    access_key: ${AWS_ACCESS_KEY_ID}
+    secret_key: ${AWS_SECRET_ACCESS_KEY}
     family: api-MET-3275-has-rows
     docker_image: 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-api
     tag: meteor-api-MET-3275-has-rows.1.0.2-dev.13756
