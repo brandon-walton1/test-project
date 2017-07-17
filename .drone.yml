@@ -13,6 +13,7 @@ pipeline:
   build:
       image: scottlackey/drone-auth-ecr
       commands:
-        - docker run 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882 postgres/db.js deploy --host=10.0.3.155 -u="postgres" -p="postgres" -d="postgres"
+        - docker run 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882 postgres/db.js deploy --host=$POSTGRES_HOST -u="$POSTGRES_USER" -p="$POSTGRES_PASSWORD" -d="$POSTGRES_DATABASE"
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
+      secrets: [ POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE ]
