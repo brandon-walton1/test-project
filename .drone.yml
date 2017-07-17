@@ -2,8 +2,8 @@ pipeline:
   auth:
     image: scottlackey/drone-auth-ecr
     environment:
-      - AWS_ACCESS_KEY_ID
-      - AWS_SECRET_ACCESS_KEY
+      - "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
+      - "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
     commands:
       - aws ecr get-login --region us-east-1 | bash
       - docker pull 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-api:meteor-api-MET-3275-has-rows.1.0.2-dev.13756
