@@ -9,6 +9,8 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock 
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE ]
+    when:
+      event: tag
 
   deploy_meteor_api:
     group: deploy
@@ -18,6 +20,8 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, VERSION ]
+    when:
+      event: tag
 
   deploy_meteor_ui:
     group: deploy
@@ -27,9 +31,13 @@ pipeline:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, VERSION ]
+    when:
+      event: tag
 
-  slack:
+  notify:
     image: plugins/slack
     webhook: https://hooks.slack.com/services/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
     channel: test-channel
     username: drone
+    when:
+      event: tag
