@@ -10,19 +10,11 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock 
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE ]
 
-  # deploy_database:
-  #   image: scottlackey/drone-auth-ecr
-  #   commands:
-  #     - docker run 404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-scripts:meteor-scripts-master.1.1.0-dev.14882 postgres/db.js deploy --host=$POSTGRES_HOST -u="$POSTGRES_USER" -p="$POSTGRES_PASSWORD" -d="$POSTGRES_DATABASE"
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   secrets: [ POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE ]
-  
   deploy_meteor_api:
     group: deploy
     image: scottlackey/drone-auth-ecr
     commands:
-      - docker run -e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" -e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" 404825630592.dkr.ecr.us-east-1.amazonaws.com/meteor-registry:ecs-deploy -n api-MET-3275-has-rows -k "$AWS_ACCESS_KEY_ID" -s "$AWS_SECRET_ACCESS_KEY" -r "us-east-1" -c "api-feature-cluster" -i "404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-api:meteor-api-MET-3275-has-rows.1.0.2-dev.13756"
+      - docker run -e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" -e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" 404825630592.dkr.ecr.us-east-1.amazonaws.com/meteor-registry:ecs-deploy -n api-MET-3275-has-rows -k "$AWS_ACCESS_KEY_ID" -s "$AWS_SECRET_ACCESS_KEY" -r "us-east-1" -c "api-feature-cluster" -i "404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-api:meteor-api-MET-3275-has-rows.$VERSION"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY ]
@@ -31,7 +23,7 @@ pipeline:
     group: deploy
     image: scottlackey/drone-auth-ecr
     commands:
-      - docker run -e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" -e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" 404825630592.dkr.ecr.us-east-1.amazonaws.com/meteor-registry:ecs-deploy -n ui-MET-3275-has-rows -k "$AWS_ACCESS_KEY_ID" -s "$AWS_SECRET_ACCESS_KEY" -r "us-east-1" -c "ui-feature-cluster" -i "404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-ui:meteor-ui-MET-3275-has-rows.1.0.2-dev.13756"
+      - docker run -e AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" -e AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" 404825630592.dkr.ecr.us-east-1.amazonaws.com/meteor-registry:ecs-deploy -n ui-MET-3275-has-rows -k "$AWS_ACCESS_KEY_ID" -s "$AWS_SECRET_ACCESS_KEY" -r "us-east-1" -c "ui-feature-cluster" -i "404825630592.dkr.ecr.us-east-1.amazonaws.com/blinemedical/meteor-ui:meteor-ui-MET-3275-has-rows.$VERSION"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY ]
