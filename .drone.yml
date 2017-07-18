@@ -28,8 +28,8 @@ pipeline:
       - /var/run/docker.sock:/var/run/docker.sock
     secrets: [ AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY ]
 
-notify:
   slack:
+    image: plugins/slack
     webhook_url: https://hooks.slack.com/services/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
     channel: test-channel
     username: drone
