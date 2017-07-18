@@ -39,5 +39,3 @@ pipeline:
     webhook: https://hooks.slack.com/services/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
     channel: test-channel
     username: drone
-    when:
-      event: tag
